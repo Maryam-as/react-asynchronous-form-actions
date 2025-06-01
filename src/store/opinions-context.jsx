@@ -59,7 +59,16 @@ export function OpinionsContextProvider({ children }) {
     });
   }
 
-  function downvoteOpinion(id) {
+  async function downvoteOpinion(id) {
+    const response = await fetch(
+      "http://localhost:3000/opinions/" + id + "/downvote",
+      { method: "POST" }
+    );
+
+    if (!response.ok) {
+      return;
+    }
+
     setOpinions((prevOpinions) => {
       return prevOpinions.map((opinion) => {
         if (opinion.id === id) {
